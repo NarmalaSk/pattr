@@ -1,0 +1,13 @@
+/target
+/log
+
+**/dist/
+
+/config/*
+!/config/*.sample.*
+!/config/tailwind.config.js
+.env
+.localData
+.[Dd][Ss]_[Ss]tore
+
+*.db
