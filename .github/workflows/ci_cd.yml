@@ -3,19 +3,26 @@ name: Build and Test
 on:
   push:
     branches:
-       - main
+      - main
 
 jobs:
   build:
     runs-on: macos-latest
 
-    env:
-      DATABASE_URL: postgres://postgres:password@localhost:5432/patr_db
-      REDIS_URL: redis://localhost:6379
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Cache Cargo dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            patr/target
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            cargo-${{ runner.os }}-
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
@@ -27,8 +34,8 @@ jobs:
       - name: Install cargo-leptos
         run: cargo install cargo-leptos
 
-      - name: Build project
-        run: cargo leptos build
+      - name: Build project in patr directory
+        run: cd patr && cargo leptos build
 
-      - name: Run tests
-        run: cargo test
+      - name: Run tests in patr directory
+        run: cd patr && cargo test
