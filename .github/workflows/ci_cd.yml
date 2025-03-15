@@ -24,23 +24,6 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Start PostgreSQL with Docker
-        run: |
-          docker run -d --name postgres \
-            -e POSTGRES_USER=postgres \
-            -e POSTGRES_PASSWORD=password \
-            -e POSTGRES_DB=patr_db \
-            -p 5432:5432 \
-            postgres:latest
-          sleep 10 # Wait for PostgreSQL to start
-
-      - name: Start Redis with Docker
-        run: |
-          docker run -d --name redis \
-            -p 6379:6379 \
-            redis:latest
-          sleep 5 # Wait for Redis to start
-
       - name: Install cargo-leptos
         run: cargo install cargo-leptos
 
