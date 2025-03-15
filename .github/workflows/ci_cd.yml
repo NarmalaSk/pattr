@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     env:
       DATABASE_URL: postgres://postgres:password@localhost:5432/patr_db
